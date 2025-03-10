@@ -6,13 +6,33 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		491D6D052D7A8F20009829A1 /* MapboxSearch in Frameworks */ = {isa = PBXBuildFile; productRef = 491D6D042D7A8F20009829A1 /* MapboxSearch */; };
+		491D6D072D7A8F20009829A1 /* MapboxSearchUI in Frameworks */ = {isa = PBXBuildFile; productRef = 491D6D062D7A8F20009829A1 /* MapboxSearchUI */; };
+		491D6D0A2D7A8FD5009829A1 /* MapboxNavigationCore in Frameworks */ = {isa = PBXBuildFile; productRef = 491D6D092D7A8FD5009829A1 /* MapboxNavigationCore */; };
+		491D6D0C2D7A8FD5009829A1 /* MapboxNavigationUIKit in Frameworks */ = {isa = PBXBuildFile; productRef = 491D6D0B2D7A8FD5009829A1 /* MapboxNavigationUIKit */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
 		4958CFF72D7A816A00B14765 /* Weel.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Weel.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		4958D0092D7A817500B14765 /* Exceptions for "Weel" folder in "Weel" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = 4958CFF62D7A816900B14765 /* Weel */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		4958CFF92D7A816A00B14765 /* Weel */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				4958D0092D7A817500B14765 /* Exceptions for "Weel" folder in "Weel" target */,
+			);
 			path = Weel;
 			sourceTree = "<group>";
 		};
@@ -23,6 +43,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				491D6D0A2D7A8FD5009829A1 /* MapboxNavigationCore in Frameworks */,
+				491D6D052D7A8F20009829A1 /* MapboxSearch in Frameworks */,
+				491D6D0C2D7A8FD5009829A1 /* MapboxNavigationUIKit in Frameworks */,
+				491D6D072D7A8F20009829A1 /* MapboxSearchUI in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -65,6 +89,10 @@
 			);
 			name = Weel;
 			packageProductDependencies = (
+				491D6D042D7A8F20009829A1 /* MapboxSearch */,
+				491D6D062D7A8F20009829A1 /* MapboxSearchUI */,
+				491D6D092D7A8FD5009829A1 /* MapboxNavigationCore */,
+				491D6D0B2D7A8FD5009829A1 /* MapboxNavigationUIKit */,
 			);
 			productName = Weel;
 			productReference = 4958CFF72D7A816A00B14765 /* Weel.app */;
@@ -94,6 +122,10 @@
 			);
 			mainGroup = 4958CFEE2D7A816900B14765;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				491D6D032D7A8F20009829A1 /* XCRemoteSwiftPackageReference "search-ios" */,
+				491D6D082D7A8FD5009829A1 /* XCRemoteSwiftPackageReference "mapbox-navigation-ios" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 4958CFF82D7A816A00B14765 /* Products */;
 			projectDirPath = "";
@@ -255,6 +287,8 @@
 				DEVELOPMENT_TEAM = K454WB4RV9;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Weel/Info.plist;
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Weel needs your location in order to get you turn-by-turn directions to your destination";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -284,6 +318,8 @@
 				DEVELOPMENT_TEAM = K454WB4RV9;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Weel/Info.plist;
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Weel needs your location in order to get you turn-by-turn directions to your destination";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -324,6 +360,48 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		491D6D032D7A8F20009829A1 /* XCRemoteSwiftPackageReference "search-ios" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/mapbox/search-ios.git";
+			requirement = {
+				kind = exactVersion;
+				version = "2.9.0-beta.1";
+			};
+		};
+		491D6D082D7A8FD5009829A1 /* XCRemoteSwiftPackageReference "mapbox-navigation-ios" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/mapbox/mapbox-navigation-ios";
+			requirement = {
+				kind = exactVersion;
+				version = "3.8.0-beta.1";
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		491D6D042D7A8F20009829A1 /* MapboxSearch */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 491D6D032D7A8F20009829A1 /* XCRemoteSwiftPackageReference "search-ios" */;
+			productName = MapboxSearch;
+		};
+		491D6D062D7A8F20009829A1 /* MapboxSearchUI */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 491D6D032D7A8F20009829A1 /* XCRemoteSwiftPackageReference "search-ios" */;
+			productName = MapboxSearchUI;
+		};
+		491D6D092D7A8FD5009829A1 /* MapboxNavigationCore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 491D6D082D7A8FD5009829A1 /* XCRemoteSwiftPackageReference "mapbox-navigation-ios" */;
+			productName = MapboxNavigationCore;
+		};
+		491D6D0B2D7A8FD5009829A1 /* MapboxNavigationUIKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 491D6D082D7A8FD5009829A1 /* XCRemoteSwiftPackageReference "mapbox-navigation-ios" */;
+			productName = MapboxNavigationUIKit;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 4958CFEF2D7A816900B14765 /* Project object */;
 }
