@@ -17,17 +17,19 @@ import UIKit
 @MainActor
 class NavigationHomeViewModel: ObservableObject {
     lazy var locationManager = CLLocationManager()
-
+    
     private lazy var placeAutocomplete = PlaceAutocomplete()
     
     private lazy var directions = Directions()
-
+    
+    private var videoManager = VideoManager()
+    
     @Published var searchText: String = ""
     
     @Published var debouncedSearchText: String = ""
     
     @Published var isSearching: Bool = false
-        
+    
     private var cancellables = Set<AnyCancellable>()
     
     @Published var suggestions: [PlaceAutocomplete.Suggestion] = []
@@ -56,7 +58,9 @@ class NavigationHomeViewModel: ObservableObject {
     @Published var displayableRoutes: [MapboxRoute] = []
     
     @Published var selectedRouteIndex: Int?
-        
+    
+    @Published var showRoutes: Bool = false
+    
     init() {
         
         $searchText
@@ -104,7 +108,7 @@ class NavigationHomeViewModel: ObservableObject {
             case .failure(let error):
                 print(error.localizedDescription)
                 self?.isSearching = false
-
+                
             }
         }
     }
@@ -137,14 +141,14 @@ class NavigationHomeViewModel: ObservableObject {
             Waypoint(coordinate: LocationCoordinate2D(latitude: origin.latitude, longitude: origin.longitude), name: "Start"),
             Waypoint(coordinate: LocationCoordinate2D(latitude: destination.latitude, longitude: destination.longitude), name: "End")
         ]
-
+        
         let options = RouteOptions(waypoints: waypoints, profileIdentifier: .automobile)
         options.includesSteps = true // Ensure turn-by-turn steps are included
         options.includesAlternativeRoutes = true
         
         directions.calculate(options) { result in
             switch result {
-                case .success(let response):
+            case .success(let response):
                 print(response)
                 DispatchQueue.main.async {
                     self.waypoints = response.waypoints ?? []
@@ -164,7 +168,10 @@ class NavigationHomeViewModel: ObservableObject {
     
     func startNavigation(_ route: MapboxRoute) {
         calculateRoutes(waypoints: waypoints) { nvc in
-            self.presentViewController(nvc: nvc)
+            DispatchQueue.main.async {
+                self.presentViewController(nvc: nvc)
+            }
+            self.videoManager.startRecording()
         }
         
     }
@@ -175,15 +182,15 @@ class NavigationHomeViewModel: ObservableObject {
             topViewController.present(nvc, animated: true, completion: nil)
         }
     }
-        
-        // Helper function to get the topmost view controller
+    
+    // Helper function to get the topmost view controller
     private func getTopViewController() -> UIViewController? {
         if let window = UIApplication.shared.windows.first(where: { $0.isKeyWindow }) {
             return getTopViewController(from: window.rootViewController)
         }
         return nil
     }
-        
+    
     private func getTopViewController(from rootViewController: UIViewController?) -> UIViewController? {
         if let navigationController = rootViewController as? UINavigationController {
             return getTopViewController(from: navigationController.visibleViewController)
@@ -212,7 +219,7 @@ class NavigationHomeViewModel: ObservableObject {
         let mapboxNavigation = mapboxNavigationProvider.mapboxNavigation
         
         let options = NavigationRouteOptions(waypoints: waypoints)
-
+        
         // create the navigation request
         let request = mapboxNavigation.routingProvider().calculateRoutes(options: options)
         
@@ -234,6 +241,7 @@ class NavigationHomeViewModel: ObservableObject {
                     navigationRoutes: navigationRoutes,
                     navigationOptions: navigationOptions
                 )
+                navigationViewController.delegate = self
                 
                 // set additional options on the NavigationViewController
                 navigationViewController.modalPresentationStyle = .fullScreen
@@ -244,6 +252,20 @@ class NavigationHomeViewModel: ObservableObject {
                 // Return the navigation view controller in the completion handler
                 completion(navigationViewController)
             }
+        }
+    }
+}
+
+    // MARK: - NavigationViewControllerDelegate
+extension NavigationHomeViewModel: NavigationViewControllerDelegate {
+    
+    func navigationViewControllerDidDismiss(_ navigationViewController: NavigationViewController, byCanceling canceled: Bool) {
+        navigationViewController.dismiss(animated: true) {
+            self.videoManager.stopRecording()
+            self.searchText = ""
+            self.showRoutes = false
+            self.suggestions.removeAll()
+            self.waypoints.removeAll()
         }
     }
 }

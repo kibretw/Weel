@@ -102,7 +102,6 @@ struct SelectedPlaceView: View {
                         
                         Button {
                             viewModel.startNavigation(route)
-//                            showNavigation.toggle()
                         } label: {
                             Text("Go")
                                 .font(.title3)
@@ -120,16 +119,6 @@ struct SelectedPlaceView: View {
         .presentationDetents(Set([.height(250)]))
         .interactiveDismissDisabled()
         .presentationBackgroundInteraction(.enabled)
-//        .fullScreenCover(isPresented: $showNavigation) {
-//            viewModel.selectedPlace = nil
-//            viewModel.routes = []
-//            viewModel.selectedRouteIndex = nil
-//            showNavigation = false
-//        } content: {
-//            if let selectedRouteIndex = viewModel.selectedRouteIndex {
-//                NavigationViewControllerRepresentable(coordinates: viewModel.displayableRoutes[selectedRouteIndex].coordinates.map({ return CLLocationCoordinate2D(latitude: $0.latitude, longitude: $0.longitude) }))
-//            }
-//        }
     }
 }
 

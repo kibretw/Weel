@@ -15,8 +15,6 @@ struct NavigationHomeView: View {
 
     @State var viewport: Viewport = .followPuck(zoom: 18, bearing: .constant(0))
     
-    @State var showRoutes: Bool = false
-
     @State var showNavigation: Bool = false
 
     init() {
@@ -61,7 +59,7 @@ struct NavigationHomeView: View {
             .padding(.horizontal)
             
             VStack {
-                if viewModel.selectedPlace == nil && !showRoutes {
+                if !viewModel.showRoutes {
                     SearchView(viewModel: viewModel)
                         .padding(.horizontal)
                 }
@@ -71,7 +69,7 @@ struct NavigationHomeView: View {
         .onChange(of: viewModel.selectedPlace) { old, new in
             if let new = new, let coordinate = new.coordinate?.getCoordinate() {
                 viewport = .camera(center: coordinate, zoom: 16)
-                showRoutes = true
+                viewModel.showRoutes = true
             }
         }
         .onChange(of: viewModel.selectedRouteIndex) { old, new in
@@ -81,7 +79,7 @@ struct NavigationHomeView: View {
                     geometryPadding: .init(top: 40, leading: 40, bottom: 40, trailing: 40))
             }
         }
-        .sheet(isPresented: $showRoutes, onDismiss: {
+        .sheet(isPresented: $viewModel.showRoutes, onDismiss: {
             viewModel.selectedPlace = nil
         }, content: {
             if let selectedPlace = viewModel.selectedPlace {

@@ -5,14 +5,16 @@
 	<key>MBXAccessToken</key>
 	<string>pk.eyJ1Ijoia2licmV0d29sZGUiLCJhIjoiY203eTF5eGI5MDU5ZTJscTRjZzVmYmJ4MSJ9.SN473GM17a56KpEBc5x6AA</string>
 	<key>UIBackgroundModes</key>
-    <array>
-        <string>audio</string>
-        <string>location</string>
-    </array>
-    <key>NSLocationTemporaryUsageDescriptionDictionary</key>
-    <dict>
-      <key>LocationAccuracyAuthorizationDescription</key>
-      <string>Please enable precise location. Turn-by-turn directions only work when precise location data is available.</string>
-    </dict>
+	<array>
+		<string>audio</string>
+		<string>location</string>
+	</array>
+	<key>NSLocationTemporaryUsageDescriptionDictionary</key>
+	<dict>
+		<key>LocationAccuracyAuthorizationDescription</key>
+		<string>Please enable precise location. Turn-by-turn directions only work when precise location data is available.</string>
+	</dict>
+	<key>NSCameraUsageDescription</key>
+	<string>Weel needs access to your camera.</string>
 </dict>
 </plist>
