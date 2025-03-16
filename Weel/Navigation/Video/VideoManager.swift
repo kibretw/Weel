@@ -12,7 +12,8 @@ class VideoManager: NSObject, ObservableObject {
     private var captureSession: AVCaptureSession?
     private var movieOutput = AVCaptureMovieFileOutput()
     @Published var videoPreviewLayer: AVCaptureVideoPreviewLayer?
-
+    @Published var showDashCam = true
+    
     private let videoKey = "savedVideos"
     
     @Published var videos = [URL]()

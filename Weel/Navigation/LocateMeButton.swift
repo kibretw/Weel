@@ -21,12 +21,18 @@ struct LocateMeButton: View {
         } label: {
             Image(systemName: imageName)
                 .frame(width: 30, height: 30)
-                .foregroundColor(.appBlue)
+                .foregroundStyle(Color.appBlue)
                 .transition(.scale.animation(.easeOut))
         }
         .frame(width: 50, height: 50)
-        .background(colorScheme == .dark ? Color.black : Color.appGray)
+        .background(colorScheme == .dark ? Color.black : Color.appBackground)
         .clipShape(.circle)
+        .overlay(
+            Circle().stroke(
+                colorScheme == .dark ? Color.tertiarySystemBackground : Color.white,
+                lineWidth: 1
+            )
+        )
     }
 
     private var isFocusingUser: Bool {

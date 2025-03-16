@@ -60,6 +60,7 @@ struct SelectedPlaceView: View {
                 
                 Button {
                     dismiss()
+                    viewModel.searchText = ""
                 } label: {
                     Image(systemName: "xmark.circle.fill")
                         .font(.title2)

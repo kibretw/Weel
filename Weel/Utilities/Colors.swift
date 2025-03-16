@@ -9,9 +9,10 @@ import Foundation
 import SwiftUI
 
 extension UIColor {
-    
-    static let lightBlue = UIColor(hex: "0089D7")
-    static let darkBlue = UIColor(hex: "0B1A30")
+    static let appBackground = UIColor(hex: "F7F3F7").withAlphaComponent(0.89)
+    static let appLightGray = UIColor(hex: "C9C6CD")
+    static let appDarkGray = UIColor(hex: "454545")
+    static let appBlue = UIColor(hex: "1E47F7")
 
     convenience init(light: UIColor, dark: UIColor) {
         self.init { traitCollection in
@@ -43,9 +44,15 @@ extension UIColor {
 
 extension Color {
     
-    static let appGray = Color(hex: "F7F3F7")
-    static let appBlue = Color(hex: "0090FF")
-    static let appDarkBlue = Color(hex: "1E47F7")
+    static let appBackground = Color(uiColor: .appBackground)
+    static let appLightGray = Color(uiColor: .appLightGray)
+    static let appDarkGray = Color(uiColor: .appDarkGray)
+    static let appBlue = Color(uiColor: .appBlue)
+    
+    // MARK: - Background Colors
+    static let systemBackground = Color(UIColor.systemBackground)
+    static let secondarySystemBackground = Color(uiColor: UIColor.secondarySystemBackground)
+    static let tertiarySystemBackground = Color(uiColor: UIColor.tertiarySystemBackground)
     
     init(light: Color, dark: Color) {
         self.init(UIColor(light: UIColor(light), dark: UIColor(dark)))

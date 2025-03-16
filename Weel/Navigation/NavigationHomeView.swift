@@ -11,13 +11,14 @@ import MapboxMaps
 struct NavigationHomeView: View {
     @Environment(\.colorScheme) var colorScheme
     @EnvironmentObject var videoManager: VideoManager
-    
     @StateObject var viewModel: NavigationHomeViewModel
 
     @State var viewport: Viewport = .followPuck(zoom: 18, bearing: .constant(0))
     
     @State var showNavigation: Bool = false
     
+    @FocusState var searchBarIsActive: Bool
+
     init(viewModel: StateObject<NavigationHomeViewModel>) {
         _viewModel = viewModel
         UITextField.appearance().clearButtonMode = .whileEditing
@@ -45,70 +46,34 @@ struct NavigationHomeView: View {
                     }
                 }
             }
-            .mapStyle(.standard)
+            .mapStyle(colorScheme == .dark ? .dark : .light)
+            .ornamentOptions(.init(scaleBar: .init(visibility: .hidden), compass: .init(visibility: .hidden), logo: .init(position: .bottomRight), attributionButton: .init(position: .bottomLeft)))
             .ignoresSafeArea()
             
-//            VStack {
-//                Spacer()
-//                
-//                HStack {
-//                    Spacer()
-//                    
-//                    LocateMeButton(viewModel: viewModel, viewport: $viewport)
-//                }
-//            }
-//            .padding(.vertical, 32)
-//            .padding(.horizontal)
-            
+            VStack {
+                MapButtons(viewModel: viewModel, viewport: $viewport)
+
+                Spacer()
+            }
             VStack(spacing: 8) {
-                DashCam()
-                    .clipShape(RoundedRectangle(cornerRadius: 16))
-                    .frame(minWidth: 0, maxWidth: .infinity)
-                    .frame(height: 200)
-                    .padding(.horizontal)
+                Spacer()
                 
                 if !viewModel.showRoutes {
-                    SearchView(viewModel: viewModel)
+                    SearchView(viewModel: viewModel, searchBarIsActive: $searchBarIsActive)
                         .padding(.horizontal)
                 }
                 
-                Spacer()
-                
-                HStack {
-                    Spacer()
-                    
-                    VStack {
-                        
-                        Button {
-                            
-                        } label: {
-                            Image(systemName: "line.3.horizontal")
-                                .frame(width: 30, height: 30)
-                                .foregroundColor(.appBlue)
-                                .transition(.scale.animation(.easeOut))
-                        }
-                        .frame(width: 50, height: 50)
-                        .background(colorScheme == .dark ? Color.black : Color.appGray)
-                        .clipShape(.circle)
-                        
-                        Button {
-                            
-                        } label: {
-                            Image(systemName: "video.fill")
-                                .frame(width: 30, height: 30)
-                                .foregroundColor(.appBlue)
-                                .transition(.scale.animation(.easeOut))
-                        }
-                        .frame(width: 50, height: 50)
-                        .background(colorScheme == .dark ? Color.black : Color.appGray)
-                        .clipShape(.circle)
-                        
-                        LocateMeButton(viewModel: viewModel, viewport: $viewport)
-                    }
+                if videoManager.showDashCam, viewModel.searchText.isEmpty, !searchBarIsActive {
+                    DashCam()
+                        .clipShape(RoundedRectangle(cornerRadius: 16))
+                        .frame(minWidth: 0, maxWidth: .infinity)
+                        .frame(height: 200)
+                        .padding(.horizontal)
+                        .transition(.move(edge: .bottom))
+                        .animation(.smooth, value: videoManager.showDashCam)
                 }
-                .padding(.horizontal)
-                .padding(.bottom, 32)
             }
+//            .padding(.bottom, 32)
         }
         .onChange(of: viewModel.selectedPlace) { old, new in
             if let new = new, let coordinate = new.coordinate?.getCoordinate() {
