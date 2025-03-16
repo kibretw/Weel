@@ -11,6 +11,8 @@ struct SearchView: View {
     @Environment(\.colorScheme) var colorScheme
 
     @ObservedObject var viewModel: NavigationHomeViewModel
+    
+    private let cornerRadius: CGFloat = 16
 
     var body: some View {
         VStack(spacing: 0) {
@@ -21,13 +23,12 @@ struct SearchView: View {
                         .foregroundStyle(Color.primary)
                         .background(colorScheme == .dark ? Color.black : Color.white)
                         .clipShape(UnevenRoundedRectangle(
-                            topLeadingRadius: 8,
-                            bottomLeadingRadius: !viewModel.searchText.isEmpty ? 0 : 8,
-                            bottomTrailingRadius: !viewModel.searchText.isEmpty ? 0 : 8,
-                            topTrailingRadius: 8))
+                            topLeadingRadius: cornerRadius,
+                            bottomLeadingRadius: !viewModel.searchText.isEmpty ? 0 : cornerRadius,
+                            bottomTrailingRadius: !viewModel.searchText.isEmpty ? 0 : cornerRadius,
+                            topTrailingRadius: cornerRadius))
                 }
             }
-            .padding(.top, 32)
             
             if !viewModel.searchText.isEmpty {
                 Divider()
@@ -55,7 +56,7 @@ struct SearchView: View {
                 .frame(minWidth: 0, maxWidth: .infinity)
                 .frame(minHeight: 50)
                 .background(colorScheme == .dark ? Color.black : Color.white)
-                .clipShape(UnevenRoundedRectangle(bottomLeadingRadius: 8, bottomTrailingRadius: 8))
+                .clipShape(UnevenRoundedRectangle(bottomLeadingRadius: cornerRadius, bottomTrailingRadius: cornerRadius))
                 .transition(.move(edge: .top))
             }
 
@@ -63,6 +64,6 @@ struct SearchView: View {
     }
 }
 
-#Preview {
-    SearchView(viewModel: NavigationHomeViewModel())
-}
+//#Preview {
+//    SearchView(viewModel: NavigationHomeViewModel())
+//}

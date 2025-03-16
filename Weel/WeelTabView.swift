@@ -8,10 +8,11 @@
 import SwiftUI
 
 struct WeelTabView: View {
-
+    @EnvironmentObject private var videoManager: VideoManager
+    
     var body: some View {
         TabView {
-            NavigationHomeView()
+            NavigationHomeView(viewModel: StateObject(wrappedValue: NavigationHomeViewModel(videoManager: videoManager)))
                 .tabItem {
                     Image(systemName: "car")
                     

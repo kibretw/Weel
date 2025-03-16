@@ -22,7 +22,7 @@ class NavigationHomeViewModel: ObservableObject {
     
     private lazy var directions = Directions()
     
-    private var videoManager = VideoManager()
+    private var videoManager: VideoManager
     
     @Published var searchText: String = ""
     
@@ -61,7 +61,9 @@ class NavigationHomeViewModel: ObservableObject {
     
     @Published var showRoutes: Bool = false
     
-    init() {
+    init(videoManager: VideoManager) {
+        self.videoManager = videoManager
+        self.videoManager.startSession()
         
         $searchText
             .debounce(for: .milliseconds(300), scheduler: DispatchQueue.main)
@@ -253,6 +255,18 @@ class NavigationHomeViewModel: ObservableObject {
                 completion(navigationViewController)
             }
         }
+    }
+    
+    func startSession() {
+        videoManager.startSession()
+    }
+    
+    func startRecording() {
+        videoManager.startRecording()
+    }
+    
+    func stopRecording() {
+        videoManager.stopRecording()
     }
 }
 

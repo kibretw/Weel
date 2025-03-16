@@ -21,10 +21,11 @@ struct LocateMeButton: View {
         } label: {
             Image(systemName: imageName)
                 .frame(width: 30, height: 30)
+                .foregroundColor(.appBlue)
                 .transition(.scale.animation(.easeOut))
         }
         .frame(width: 50, height: 50)
-        .background(colorScheme == .dark ? Color.black : Color.white)
+        .background(colorScheme == .dark ? Color.black : Color.appGray)
         .clipShape(.circle)
     }
 
@@ -38,14 +39,5 @@ struct LocateMeButton: View {
         }
         return "location"
 
-    }
-}
-
-private extension View {
-    func safeContentTransition() -> some View {
-        if #available(iOS 17, *) {
-            return self.contentTransition(.symbolEffect(.replace))
-        }
-        return self
     }
 }

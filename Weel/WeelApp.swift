@@ -9,10 +9,17 @@ import SwiftUI
 
 @main
 struct WeelApp: App {
+    @StateObject private var videoManager = VideoManager()
     
     var body: some Scene {
         WindowGroup {
-            WeelTabView()
+            NavigationHomeView(viewModel: StateObject(wrappedValue: NavigationHomeViewModel(videoManager: videoManager)))
+                .tabItem {
+                    Image(systemName: "car")
+                    
+                    Text("Drive")
+                }
+                .environmentObject(videoManager)
         }
     }
 }

@@ -122,9 +122,9 @@ struct SelectedPlaceView: View {
     }
 }
 
-#Preview {
-    Text("Hello World")
-        .sheet(isPresented: .constant(true)) {
-            SelectedPlaceView(viewModel: NavigationHomeViewModel(), place: MapboxWrapper(id: "", name: "Madison Square Park", description: "11 Madison Ave, New York City, New York 10010, United States", coordinate: Coordinate(latitude: 40.742176, longitude: -73.988068), distance: 4019, estimatedTime: .init(value: 16.95, unit: .minutes)), showNavigation: .constant(false))
-        }
-}
+//#Preview {
+//    Text("Hello World")
+//        .sheet(isPresented: .constant(true)) {
+//            SelectedPlaceView(viewModel: NavigationHomeViewModel(), place: MapboxWrapper(id: "", name: "Madison Square Park", description: "11 Madison Ave, New York City, New York 10010, United States", coordinate: Coordinate(latitude: 40.742176, longitude: -73.988068), distance: 4019, estimatedTime: .init(value: 16.95, unit: .minutes)), showNavigation: .constant(false))
+//        }
+//}

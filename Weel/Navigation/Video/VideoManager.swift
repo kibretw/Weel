@@ -11,7 +11,7 @@ import UIKit
 class VideoManager: NSObject, ObservableObject {
     private var captureSession: AVCaptureSession?
     private var movieOutput = AVCaptureMovieFileOutput()
-    private var videoPreviewLayer: AVCaptureVideoPreviewLayer?
+    @Published var videoPreviewLayer: AVCaptureVideoPreviewLayer?
 
     private let videoKey = "savedVideos"
     
@@ -37,11 +37,20 @@ class VideoManager: NSObject, ObservableObject {
         if captureSession.canAddOutput(movieOutput) {
             captureSession.addOutput(movieOutput)
         }
+        
+        videoPreviewLayer = AVCaptureVideoPreviewLayer(session: captureSession)
+        videoPreviewLayer?.videoGravity = .resizeAspectFill
+    }
+    
+    func startSession() {
+        captureSession?.startRunning()
+    }
+    
+    func stopSession() {
+        captureSession?.stopRunning()
     }
 
     func startRecording() {
-        captureSession?.startRunning()
-
         guard let captureSession = captureSession, captureSession.isRunning else { return }
 
         let tempURL = FileManager.default.temporaryDirectory.appendingPathComponent("\(UUID().uuidString).mov")

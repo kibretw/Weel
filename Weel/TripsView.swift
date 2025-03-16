@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct TripsView: View {
-    @StateObject private var videoManager = VideoManager()
+    @EnvironmentObject private var videoManager: VideoManager
 
     var body: some View {
         NavigationStack {

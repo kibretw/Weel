@@ -10,15 +10,17 @@ import MapboxMaps
 
 struct NavigationHomeView: View {
     @Environment(\.colorScheme) var colorScheme
+    @EnvironmentObject var videoManager: VideoManager
     
-    @StateObject private var viewModel = NavigationHomeViewModel()
+    @StateObject var viewModel: NavigationHomeViewModel
 
     @State var viewport: Viewport = .followPuck(zoom: 18, bearing: .constant(0))
     
     @State var showNavigation: Bool = false
-
-    init() {
-      UITextField.appearance().clearButtonMode = .whileEditing
+    
+    init(viewModel: StateObject<NavigationHomeViewModel>) {
+        _viewModel = viewModel
+        UITextField.appearance().clearButtonMode = .whileEditing
     }
 
     var body: some View {
@@ -44,26 +46,68 @@ struct NavigationHomeView: View {
                 }
             }
             .mapStyle(.standard)
-            .ignoresSafeArea(.all, edges: .top)
+            .ignoresSafeArea()
             
-            VStack {
+//            VStack {
+//                Spacer()
+//                
+//                HStack {
+//                    Spacer()
+//                    
+//                    LocateMeButton(viewModel: viewModel, viewport: $viewport)
+//                }
+//            }
+//            .padding(.vertical, 32)
+//            .padding(.horizontal)
+            
+            VStack(spacing: 8) {
+                DashCam()
+                    .clipShape(RoundedRectangle(cornerRadius: 16))
+                    .frame(minWidth: 0, maxWidth: .infinity)
+                    .frame(height: 200)
+                    .padding(.horizontal)
+                
+                if !viewModel.showRoutes {
+                    SearchView(viewModel: viewModel)
+                        .padding(.horizontal)
+                }
+                
                 Spacer()
                 
                 HStack {
                     Spacer()
                     
-                    LocateMeButton(viewModel: viewModel, viewport: $viewport)
+                    VStack {
+                        
+                        Button {
+                            
+                        } label: {
+                            Image(systemName: "line.3.horizontal")
+                                .frame(width: 30, height: 30)
+                                .foregroundColor(.appBlue)
+                                .transition(.scale.animation(.easeOut))
+                        }
+                        .frame(width: 50, height: 50)
+                        .background(colorScheme == .dark ? Color.black : Color.appGray)
+                        .clipShape(.circle)
+                        
+                        Button {
+                            
+                        } label: {
+                            Image(systemName: "video.fill")
+                                .frame(width: 30, height: 30)
+                                .foregroundColor(.appBlue)
+                                .transition(.scale.animation(.easeOut))
+                        }
+                        .frame(width: 50, height: 50)
+                        .background(colorScheme == .dark ? Color.black : Color.appGray)
+                        .clipShape(.circle)
+                        
+                        LocateMeButton(viewModel: viewModel, viewport: $viewport)
+                    }
                 }
-            }
-            .padding(.vertical, 32)
-            .padding(.horizontal)
-            
-            VStack {
-                if !viewModel.showRoutes {
-                    SearchView(viewModel: viewModel)
-                        .padding(.horizontal)
-                }
-                Spacer()
+                .padding(.horizontal)
+                .padding(.bottom, 32)
             }
         }
         .onChange(of: viewModel.selectedPlace) { old, new in
@@ -87,8 +131,4 @@ struct NavigationHomeView: View {
             }
         })
     }
-}
-
-#Preview {
-    NavigationHomeView()
 }
